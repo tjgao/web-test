@@ -2,12 +2,18 @@ import os, sys
 import cherrypy
 import service
 
-upload_dir = os.path.join(os.path.abspath(os.path.join(os.path.dir(__file__))), 'upload')
+upload_dir = os.path.join(os.path.abspath(os.path.join(os.path.dirname(__file__))), 'upload')
+
+def prepare_dir():
+    if not os.path.isdir(upload_dir):
+        os.makedirs(upload_dir)
 
 if __name__ == '__main__':
     enable_ssl = False
     if len(sys.argv) > 1 and sys.argv[1] == 'ssl':
         enable_ssl = True
+
+    prepare_dir()
 
     server_config = {
         'server.socket_port':5000,
